@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Eye shape -->
+    <path
+        android:fillColor="#6B4EFF"
+        android:pathData="M54,22 C32,22 14,40 14,54 C14,68 32,86 54,86 C76,86 94,68 94,54 C94,40 76,22 54,22 Z M54,30 C70,30 82,42 82,54 C82,66 70,78 54,78 C38,78 26,66 26,54 C26,42 38,30 54,30 Z" />
+    <!-- Manga page pupil -->
+    <path
+        android:fillColor="#00BCD4"
+        android:pathData="M54,38 C45,38 38,45 38,54 C38,63 45,70 54,70 C63,70 70,63 70,54 C70,45 63,38 54,38 Z M54,42 C58,42 62,45 64,50 L44,50 C46,45 50,42 54,42 Z M44,54 L64,54 C62,59 58,62 54,62 C50,62 46,59 44,54 Z" />
+    <!-- Top fold -->
+    <path
+        android:fillColor="#4A3FD8"
+        android:pathData="M54,22 L54,30 L58,26 Z" />
+    <!-- Bottom fold -->
+    <path
+        android:fillColor="#4A3FD8"
+        android:pathData="M54,78 L54,86 L58,82 Z" />
+    <!-- Sparkle accents -->
+    <path
+        android:fillColor="#00BCD4"
+        android:pathData="M18,18 L20,24 L26,26 L20,28 L18,34 L16,28 L10,26 L16,24 Z" />
+    <path
+        android:fillColor="#6B4EFF"
+        android:pathData="M88,14 L89,18 L93,19 L89,20 L88,24 L87,20 L83,19 L87,18 Z" />
+</vector>
