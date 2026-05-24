@@ -66,7 +66,7 @@ dependencies {
     implementation(libs.androidx.datastore.preferences)
     debugImplementation(libs.androidx.ui.tooling)
 
-    implementation("com.github.KotatsuApp:kotatsu-parsers:v1.6") {
+    implementation("com.github.KotatsuApp:kotatsu-parsers:main-SNAPSHOT") {
         exclude(group = "org.json", module = "json")
     }
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
