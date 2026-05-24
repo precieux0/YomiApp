@@ -2,6 +2,7 @@ package com.yomi.mangaflow
 
 import android.app.Application
 import coil3.ImageLoader
+import coil3.network.okhttp.OkHttpNetworkFetcher
 import com.yomi.mangaflow.data.datasource.KotatsuDataSource
 import com.yomi.mangaflow.data.datasource.KotatsuLoaderContext
 import com.yomi.mangaflow.data.local.SettingsDataStore
@@ -27,10 +28,11 @@ val appModule = module {
     single { OkHttpClient.Builder().build() }
     single {
         ImageLoader.Builder(get())
+            .components { add(OkHttpNetworkFetcher.Factory(get())) }
             .build()
     }
     single { KotatsuLoaderContext(get(), get(), get()) }
     single { KotatsuDataSource(get()) }
-    single { MangaRepository(get(), get()) }
+    single { MangaRepository(get()) }
     factory { MainViewModel(get(), get()) }
 }

@@ -9,13 +9,14 @@ import org.koitharu.kotatsu.parsers.MangaLoaderContext
 import org.koitharu.kotatsu.parsers.model.Manga as KotatsuManga
 import org.koitharu.kotatsu.parsers.model.MangaChapter as KotatsuChapter
 import org.koitharu.kotatsu.parsers.model.MangaSource
+import org.koitharu.kotatsu.parsers.model.MangaStatus
 import org.koitharu.kotatsu.parsers.model.MangaTag
 
 class KotatsuDataSource(
     private val loaderContext: MangaLoaderContext
 ) {
 
-    fun getAllSources(): List<MangaSource> = MangaSource.values().toList()
+    fun getAllSources(): List<MangaSource> = MangaSource.entries.toList()
 
     suspend fun getAllTags(): List<Tag> = loaderContext.getTags().map { it.toYomiTag() }
 
@@ -62,7 +63,13 @@ class KotatsuDataSource(
         coverUrl = this.coverUrl ?: "",
         description = this.description ?: "",
         author = this.author ?: "",
-        status = this.status?.name ?: "Unknown",
+        status = when (this.status) {
+            MangaStatus.ONGOING -> "Ongoing"
+            MangaStatus.FINISHED -> "Completed"
+            MangaStatus.PAUSED -> "Hiatus"
+            MangaStatus.DROPPED -> "Cancelled"
+            else -> "Unknown"
+        },
         genre = this.tags.map { it.title },
         rating = this.rating?.toFloat() ?: 0f,
         source = this.source.name,

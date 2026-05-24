@@ -186,8 +186,8 @@ class MainViewModel(
                 _rawLatest.value = repository.getLatestManga(sourceId)
                 applyFiltersAndSort()
             } catch (e: Exception) {
-                _popularManga.value = UiState.Error(e.message ?: "Erreur")
-                _latestManga.value = UiState.Error(e.message ?: "Erreur")
+                _popularManga.value = UiState.Error(e.message ?: "Erreur chargement")
+                _latestManga.value = UiState.Error(e.message ?: "Erreur chargement")
             }
         }
     }
@@ -207,23 +207,7 @@ class MainViewModel(
 
     suspend fun getChapterPages(mangaId: String, chapter: Chapter): List<String> {
         val sourceId = _selectedManga.value?.sourceId ?: _currentSource.value
-        return repository.getChapterPages(mangaId, chapter.url, sourceId)
-    }
-
-    suspend fun downloadChapter(manga: Manga, chapter: Chapter, onProgress: (Int, Int) -> Unit = { _, _ -> }) {
-        repository.downloadChapter(manga, chapter, onProgress)
-    }
-
-    suspend fun deleteDownload(mangaId: String, chapterId: String) {
-        repository.deleteDownload(mangaId, chapterId)
-    }
-
-    suspend fun saveProgress(mangaId: String, chapterId: String, pageIndex: Int) {
-        settingsDataStore.saveProgress(mangaId, chapterId, pageIndex)
-    }
-
-    suspend fun getProgress(mangaId: String, chapterId: String): Int {
-        return settingsDataStore.getProgress(mangaId, chapterId)
+        return repository.getChapterPages(chapter.url, sourceId)
     }
 
     suspend fun searchManga(sourceId: String, query: String): List<Manga>? {
@@ -232,6 +216,14 @@ class MainViewModel(
         } catch (e: Exception) {
             null
         }
+    }
+
+    suspend fun saveProgress(mangaId: String, chapterId: String, pageIndex: Int) {
+        settingsDataStore.saveProgress(mangaId, chapterId, pageIndex)
+    }
+
+    suspend fun getProgress(mangaId: String, chapterId: String): Int {
+        return settingsDataStore.getProgress(mangaId, chapterId)
     }
 
     fun setReaderMode(mode: ReadingMode) {
