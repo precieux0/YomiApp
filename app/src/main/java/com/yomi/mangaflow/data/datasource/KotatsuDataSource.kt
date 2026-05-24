@@ -16,7 +16,7 @@ class KotatsuDataSource(
     private val loaderContext: MangaLoaderContext
 ) {
 
-    fun getAllSources(): List<MangaSource> = MangaSource.entries.toList()
+    fun getAllSources(): List<MangaSource> = MangaSource.values().toList()
 
     suspend fun getAllTags(): List<Tag> = loaderContext.getTags().map { it.toYomiTag() }
 
@@ -41,8 +41,8 @@ class KotatsuDataSource(
         val parser = getParser(sourceId)
         val details = parser.getDetails(mangaUrl)
         return MangaDetail(
-            manga = details.manga.toYomiManga(sourceId),
-            chapters = details.chapters.map { it.toYomiChapter() }
+            manga = details.first.toYomiManga(sourceId),
+            chapters = details.second.map { it.toYomiChapter() }
         )
     }
 

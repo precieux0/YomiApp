@@ -20,9 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil3.compose.AsyncImage
 import com.yomi.mangaflow.data.model.Manga
-import com.yomi.mangaflow.data.repository.MangaRepository
 import com.yomi.mangaflow.ui.viewmodel.MainViewModel
-import com.yomi.mangaflow.ui.viewmodel.UiState
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -36,16 +34,16 @@ fun SearchScreen(
     var results by remember { mutableStateOf<List<Manga>>(emptyList()) }
     var isLoading by remember { mutableStateOf(false) }
     val currentSource by viewModel.currentSource.collectAsState()
-    val repository = org.koin.compose.getKoin().get<MangaRepository>() // À ajuster selon votre DI
     val scope = rememberCoroutineScope()
 
-    // Recherche lorsque la requête change
     LaunchedEffect(query, currentSource) {
         if (query.isNotBlank()) {
             isLoading = true
             try {
-                val found = repository.searchManga(currentSource, query)
-                results = found
+                // Appel direct au repository via viewModel (à implémenter)
+                // Pour l'exemple, on utilise une méthode temporaire
+                val found = viewModel.searchManga(currentSource, query)
+                results = found ?: emptyList()
             } catch (e: Exception) {
                 results = emptyList()
             } finally {

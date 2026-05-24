@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import coil3.ImageLoader
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import okhttp3.CookieJar
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import org.koitharu.kotatsu.parsers.MangaLoaderContext
@@ -23,6 +24,7 @@ class KotatsuLoaderContext(
     override val httpClient: OkHttpClient = okHttpClient
     override val networkClient = OkHttpNetworkClient(okHttpClient)
     override val resources = AndroidResources(appContext)
+    override val cookieJar: CookieJar = okHttpClient.cookieJar
 
     override suspend fun getCachedMangaPage(key: String): ByteArray? = null
     override suspend fun storeMangaPage(key: String, data: ByteArray, mime: MimeType): Boolean = false

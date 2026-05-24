@@ -226,6 +226,14 @@ class MainViewModel(
         return settingsDataStore.getProgress(mangaId, chapterId)
     }
 
+    suspend fun searchManga(sourceId: String, query: String): List<Manga>? {
+        return try {
+            repository.searchManga(sourceId, query)
+        } catch (e: Exception) {
+            null
+        }
+    }
+
     fun setReaderMode(mode: ReadingMode) {
         viewModelScope.launch {
             val key = when (mode) {

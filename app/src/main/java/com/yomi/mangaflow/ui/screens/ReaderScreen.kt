@@ -1,7 +1,6 @@
-import androidx.compose.foundation.clickable
 package com.yomi.mangaflow.ui.screens
 
-import android.graphics.PointF
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
@@ -46,7 +45,6 @@ fun ReaderScreen(
     val scope = rememberCoroutineScope()
     var showControls by remember { mutableStateOf(true) }
     var showSettings by remember { mutableStateOf(false) }
-    val context = LocalContext.current
 
     val readerMode by viewModel.readerMode.collectAsStateWithLifecycle()
     val mangaDetailState by viewModel.mangaDetail.collectAsStateWithLifecycle()
@@ -56,7 +54,6 @@ fun ReaderScreen(
     var currentPageIndex by remember { mutableStateOf(0) }
     val listState = rememberLazyListState(initialFirstVisibleItemIndex = currentPageIndex)
 
-    // Charger les pages et la progression
     LaunchedEffect(chapterId, mangaId) {
         pagesState = UiState.Loading
         try {
@@ -73,7 +70,6 @@ fun ReaderScreen(
         }
     }
 
-    // Sauvegarder la progression
     LaunchedEffect(currentPageIndex, chapterId) {
         delay(1000)
         viewModel.saveProgress(mangaId, chapterId, currentPageIndex)
@@ -328,8 +324,7 @@ private fun ReaderSettingsSheet(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black.copy(alpha = 0.6f))
-            
-.clickable(onClick = onDismiss)
+            .clickable(onClick = onDismiss)
     ) {
         Card(
             modifier = Modifier
@@ -357,8 +352,7 @@ private fun ReaderSettingsSheet(
 @Composable
 private fun ReaderModeChip(label: String, selected: Boolean, onClick: () -> Unit) {
     Card(
-        modifier = Modifier
-.clickable(onClick = onClick),
+        modifier = Modifier.clickable(onClick = onClick),
         colors = CardDefaults.cardColors(
             containerColor = if (selected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant
         ),
