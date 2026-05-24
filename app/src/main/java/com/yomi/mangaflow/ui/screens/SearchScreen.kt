@@ -36,7 +36,7 @@ fun SearchScreen(
     var results by remember { mutableStateOf<List<Manga>>(emptyList()) }
     var isLoading by remember { mutableStateOf(false) }
     val currentSource by viewModel.currentSource.collectAsState()
-    val repository = remember { MangaRepository(org.koin.compose.getKoin().get()) } // À ajuster selon votre DI
+    val repository = org.koin.compose.getKoin().get<MangaRepository>() // À ajuster selon votre DI
     val scope = rememberCoroutineScope()
 
     // Recherche lorsque la requête change

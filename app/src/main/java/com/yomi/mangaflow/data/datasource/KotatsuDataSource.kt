@@ -6,9 +6,9 @@ import com.yomi.mangaflow.data.model.MangaDetail
 import com.yomi.mangaflow.data.model.Tag
 import kotlinx.coroutines.flow.first
 import org.koitharu.kotatsu.parsers.MangaLoaderContext
-import org.koitharu.kotatsu.parsers.MangaParserSource
 import org.koitharu.kotatsu.parsers.model.Manga as KotatsuManga
 import org.koitharu.kotatsu.parsers.model.MangaChapter as KotatsuChapter
+import org.koitharu.kotatsu.parsers.model.MangaSource
 import org.koitharu.kotatsu.parsers.model.MangaStatus
 import org.koitharu.kotatsu.parsers.model.MangaTag
 
@@ -16,13 +16,16 @@ class KotatsuDataSource(
     private val loaderContext: MangaLoaderContext
 ) {
 
-    fun getAllSources(): List<MangaParserSource> = MangaParserSource.entries.toList()
+    fun getAllSources(): List<MangaSource> = MangaSource.entries.toList()
 
-    suspend fun getAllTags(): List<Tag> = loaderContext.tags.map { it.toYomiTag() }
+    suspend fun getAllTags(): List<Tag> = loaderContext.getTags().map { it.toYomiTag() }
 
-    private fun MangaTag.toYomiTag() = Tag(id = this.id, name = this.title, category = this.category.name)
+    private fun MangaTag.toYomiTag() = Tag(id = this.key, name = this.title, category = this.category.name)
 
-    private suspend fun getParser(sourceId: String) = loaderContext.newParserInstance(MangaParserSource.valueOf(sourceId))
+    private suspend fun getParser(sourceId: String): org.koitharu.kotatsu.parsers.MangaParser {
+        val enumSource = MangaSource.valueOf(sourceId)
+        return loaderContext.newParserInstance(enumSource)
+    }
 
     suspend fun getPopularManga(sourceId: String): List<Manga> {
         val result = getParser(sourceId).getPopular().first()

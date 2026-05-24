@@ -8,6 +8,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.first
 
 private val Context.dataStore by preferencesDataStore(name = "yomi_settings")
 
@@ -22,7 +23,6 @@ class SettingsDataStore(private val context: Context) {
     private val FILTER_STATUS_KEY = stringPreferencesKey("filter_status")
     private val SORT_ORDER_KEY = stringPreferencesKey("sort_order")
 
-    // Progression de lecture : clé = "progress_${mangaId}_${chapterId}"
     fun getProgressKey(mangaId: String, chapterId: String) = intPreferencesKey("progress_${mangaId}_${chapterId}")
 
     val themePreference: Flow<ThemePreference> = context.dataStore.data.map { prefs ->
@@ -124,6 +124,6 @@ class SettingsDataStore(private val context: Context) {
     suspend fun getProgress(mangaId: String, chapterId: String): Int {
         return context.dataStore.data.map { prefs ->
             prefs[getProgressKey(mangaId, chapterId)] ?: 0
-        }.catch { emit(0) }.first()
+        }.first()
     }
 }

@@ -52,7 +52,7 @@ class MainViewModel(
     private val _filterStatus = MutableStateFlow("all")
     val filterStatus: StateFlow<String> = _filterStatus.asStateFlow()
 
-    private val _sortOrder = MutableStateFlow(SortOrder.Popularity)
+    private val _sortOrder = MutableStateFlow<SortOrder>(SortOrder.Popularity)
     val sortOrder: StateFlow<SortOrder> = _sortOrder.asStateFlow()
 
     private val _rawPopular = MutableStateFlow<List<Manga>>(emptyList())
@@ -100,8 +100,10 @@ class MainViewModel(
                 else -> ReadingMode.STANDARD
             }
 
-            _availableSources.value = repository.getAllSources().map { it.name }
-            _availableTags.value = repository.getAllTags()
+            val sources = repository.getAllSources()
+            _availableSources.value = sources.map { it.name }
+            val tags = repository.getAllTags()
+            _availableTags.value = tags
         }
         loadHomeData()
 

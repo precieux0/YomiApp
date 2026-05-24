@@ -1,3 +1,4 @@
+import androidx.compose.foundation.clickable
 package com.yomi.mangaflow.ui.screens
 
 import android.graphics.PointF
@@ -327,7 +328,8 @@ private fun ReaderSettingsSheet(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black.copy(alpha = 0.6f))
-            .clickable(onClick = onDismiss)
+            
+.clickable(onClick = onDismiss)
     ) {
         Card(
             modifier = Modifier
@@ -355,7 +357,8 @@ private fun ReaderSettingsSheet(
 @Composable
 private fun ReaderModeChip(label: String, selected: Boolean, onClick: () -> Unit) {
     Card(
-        modifier = Modifier.clickable(onClick = onClick),
+        modifier = Modifier
+.clickable(onClick = onClick),
         colors = CardDefaults.cardColors(
             containerColor = if (selected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surfaceVariant
         ),
